@@ -13,6 +13,10 @@ import { PetComponent } from './pet/pet.component';
 import { RepairComponent } from './repair/repair.component';
 import { MediseenComponent } from './mediseen/mediseen.component';
 import { ReportComponent } from './report/report.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import {shareService} from './shareService';
+
 
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent },
@@ -36,8 +40,13 @@ const appRoutes: Routes = [
     MediseenComponent,
     ReportComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, RouterModule.forRoot(appRoutes)],
-  providers: [],
+  imports: [
+    HttpClientModule,
+    FormsModule,
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule.forRoot(appRoutes)],
+  providers: [shareService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

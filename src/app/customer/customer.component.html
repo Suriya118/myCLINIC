@@ -12,32 +12,33 @@
       <i class="fa fa-plus" aria-hidden="true"></i>
       เพิ่มรายการ
     </div>
-    <table class="table text-center">
+    <table class="table text-center table-striped">
       <thead>
         <tr>
           <th>รหัสลูกค้า</th>
           <th>ชื่อ</th>
           <th>อีเมลล์</th>
           <th>เบอร์โทร</th>
-          <th>ที่อยู่</th>
           <th>Line ID</th>
+          <th>ที่อยู่</th>
           <th>จัดการข้อมูล</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td scope="row"></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr *ngFor="let item of customers" >
+          <td> {{item.code}} </td>
+          <td>{{item.name}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.tel}}</td>
+          <td>{{item.LineID}}</td>
+          <td>{{item.address}}</td>
           <td>
-            <div class="btn btn-warning">
+            <div class="btn btn-warning" (click)="customerInfo(item)" data-toggle="modal"
+            data-target="#ModalCustomer" >
               <i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข
             </div>
             &nbsp;&nbsp;
-            <div class="btn btn-danger">
+            <div class="btn btn-danger" (click)="customerDelete(item)" >
               <i class="fa fa-times" aria-hidden="true"></i> ลบ
             </div>
           </td>
@@ -70,46 +71,46 @@
           <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="form-group">
               <label>รหัสลูกค้า</label>
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" name="code" [(ngModel)]="code" />
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="form-group">
               <label>ชื่อ</label>
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" name="name" [(ngModel)]="name"  />
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="form-group">
               <label>อีเมลล์</label>
-              <input type="email" class="form-control" />
+              <input type="email" class="form-control" name="email" [(ngModel)]="email"  />
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="form-group">
               <label>เบอร์โทร</label>
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" name="tel" [(ngModel)]="tel"  />
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="form-group">
               <label>Line ID</label>
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" name="LineID" [(ngModel)]="LineID"  />
             </div>
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="form-group">
               <label>ที่อยู่</label>
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" name="address" [(ngModel)]="address"  />
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">
+        <button type="button" class="btn btn-default" (click)="customerClear()" data-dismiss="modal">
           ปิด
         </button>
-        <button type="button" class="btn btn-primary">เพิ่ม</button>
+        <button type="button" class="btn btn-primary" (click)="save()" data-dismiss="modal" >เพิ่ม</button>
       </div>
     </div>
     <!-- /.modal-content -->
