@@ -17,16 +17,14 @@ export class PetComponent implements OnInit {
     _id: null,
   };
 
-  pet= {
+  pet = {
     customer_id: null,
     name: null,
     remark: null,
-    _id: null
+    _id: null,
   };
 
-  pets:any;
-
-
+  pets: any;
 
   ngOnInit(): void {
     this.laodCustomer();
@@ -48,16 +46,40 @@ export class PetComponent implements OnInit {
   save() {
     this.pet.customer_id = this.customer._id;
     this.http
-      .post(this.shareService.serverPath + '/petSave',this.pet)
+      .post(this.shareService.serverPath + '/petSave', this.pet)
       .subscribe((res: any) => {
         this.loadPets();
       });
   }
 
-  loadPets(){
-    this.http.get(this.shareService.serverPath + '/petAll').subscribe((res: any) =>{
-      this.pets = res
-      console.warn(this.pets);
-    });
+  loadPets() {
+    this.http
+      .get(this.shareService.serverPath + '/petAll')
+      .subscribe((res: any) => {
+        this.pets = res;
+        this.customer.name = '';
+        this.pet.name = '';
+        this.pet.remark = '';
+      });
+  }
+
+  deletePets(item) {
+    var params = {
+      _id: item._id,
+    };
+
+    if (confirm('ยืนยันการลบ ?')) {
+      this.http
+        .post(this.shareService.serverPath + '/petDelete', params)
+        .subscribe((res: any) => {
+          alert('ลบรายการแล้ว');
+          this.loadPets();
+        });
+    }
+  }
+
+  editPet(item) {
+    this.pet = item;
+    this.customer = item.customer[0];
   }
 }
