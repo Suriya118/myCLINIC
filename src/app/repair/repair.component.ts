@@ -26,6 +26,18 @@ export class RepairComponent implements OnInit {
     problem: null,
   };
 
+  mediseens: any;
+
+  repairMediceen = {
+    _id: null,
+    qty: null,
+    remark: null,
+    mediceen_id: null,
+    repair_id: null,
+  };
+
+  historys: any;
+
   constructor(private shareService: shareService, private http: HttpClient) {}
   ngOnInit(): void {}
 
@@ -92,5 +104,18 @@ export class RepairComponent implements OnInit {
   }
   editRepair(item) {
     this.repair = item;
+  }
+
+  alerttest(){
+    alert("ทดสอบ");
+  }
+
+  modalRepairMediseen(item){
+    this.repairMediceen.repair_id = item._id;
+    this.http
+      .get(this.shareService.serverPath + '/mediceenAll', item)
+      .subscribe((res: any) => {
+        this.mediseens = res;
+      });
   }
 }
