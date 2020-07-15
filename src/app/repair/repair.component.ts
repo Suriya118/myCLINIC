@@ -24,15 +24,17 @@ export class RepairComponent implements OnInit {
   repairs: any;
   repair = {
     problem: null,
+    price: null,
+    remark: null,
   };
 
   mediseens: any;
 
-  repairMediceen = {
+  repairMediseen = {
     _id: null,
     qty: null,
     remark: null,
-    mediceen_id: null,
+    mediseen_id: null,
     repair_id: null,
   };
 
@@ -78,6 +80,8 @@ export class RepairComponent implements OnInit {
         this.loadRepairOfPet();
         this.repair = {
           problem: null,
+          price:null,
+          remark:null,
         };
       });
   }
@@ -106,16 +110,53 @@ export class RepairComponent implements OnInit {
     this.repair = item;
   }
 
-  alerttest(){
-    alert("ทดสอบ");
-  }
 
   modalRepairMediseen(item){
-    this.repairMediceen.repair_id = item._id;
+    this.repairMediseen.repair_id = item._id;
     this.http
-      .get(this.shareService.serverPath + '/mediceenAll', item)
+      .get(this.shareService.serverPath + '/mediseenAll', item)
       .subscribe((res: any) => {
         this.mediseens = res;
       });
+  }
+
+  saveRepairMediseen(){
+    if (confirm('ต้องการบันทึกข้อมูลหรือไม่ ?')) {
+      this.http
+        .post(this.shareService.serverPath + '/saveRepairMediseen', this.repairMediseen)
+        .subscribe((res: any) => {
+          alert('บันทึกเรียบร้อย');
+        });
+    }
+  }
+
+  chooseMediseen(item){
+      this.repairMediseen.mediseen_id = item._id;
+      this.repairMediseen.qty = null;
+      this.repairMediseen.remark = null;
+  }
+
+  ModalHistory(item){
+    this.http
+      .post(this.shareService.serverPath + '/historyAll', item)
+      .subscribe((res: any) => {
+        this.historys = res;
+      });
+  }
+  removeHistory(item){
+    if (confirm('ยืนยันการลบ ?')) {
+      this.http
+        .post(this.shareService.serverPath + '/removeHistory', item)
+        .subscribe((res: any) => {
+          alert('ลบเรียบร้อย');
+          var netItem = {
+            _id: item.repair_id,
+          };
+          //this.modalHistory(netItem);
+        });
+    }
+  }
+  editHistory(item){
+    this.repairMediseen = item;
   }
 }
